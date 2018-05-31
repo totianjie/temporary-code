@@ -1,0 +1,115 @@
+mvc:
+	前端模板:
+		本质：正则、替换
+
+		{$name}	{$age}
+--------------------------------------------
+前端模板库——artTemplate
+
+	官网: http://aui.github.io/artTemplate/
+
+优点:
+	1. 性能高
+	2. 兼容所有浏览器
+	3. 模板语句简洁
+--------------------------------------------
+下载相关文件:
+	template-native.js	->  原生js语法		√
+	template.js	-> 支持语法不一样   {{title}}	mustache语法
+--------------------------------------------
+模板如何制作的？
+	<script type="text/html" id="tpl">
+		<h1>{{title}}</h1>
+	</script>
+模板和数据的关联?
+	template('tpl',data)
+
+数据：
+	var data={
+		title:'asdffds'
+	};
+
+模板里面循环：既可以循环数组，又可以循环json
+	{{each arr as value key}}
+            <li>{{value}}  ----> {{key}}</li>
+            {{/each}}
+include:
+	{{include 'list'}}
+-----------------------------------------------
+原生语法:	template-native.js
+	<%=title%>
+
+	<%for(var i=0; i<arr.length; i++){%>
+            <li><%=arr[i]%> --->  <%=i+1%></li>
+            <%}%>
+
+非转意输出:
+	<%=#msg%>
+	{{#msg}}
+---------------------------------------------------
+模板放到了js代码里面:
+	var str='<ul>' +
+                '<%for(var i=0; i<arr.length; i++){%>' +
+                '<li><%=arr[i]%></li>' +
+                '<%}%>' +
+                '</ul>';
+
+	var render=template.compile(str);
+	var sHTML=render(data);
+---------------------------------------------------
+扩展artTemplate函数功能(自定义函数):
+
+	template.helper();
+	
+	template.helper('toDou',function(input){
+	    return input.toFixed(2);
+	});
+---------------------------------------------------
+打印数据:	print
+
+	print()	可以直接输出数据		类似document.write();
+---------------------------------------------------
+可以自定义模板标记:
+	a). 第一种配置方式
+	template.defaults.openTag='{$';
+         	template.defaults.closeTag='$}';
+	
+		{$=msg$}
+		{$=#msg$}
+	b). 第二种配置方式
+	template.config('openTag','{$');
+        	template.config('closeTag','$}');
+
+整体配置非转意输出:
+	template.config('escape',false); //非转意输出
+----------------------------------------------------------
+百度百科
+----------------------------------------------------------
+微博:
+
+
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

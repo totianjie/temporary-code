@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>智能课堂 —— 微博ajax接口测试 - www.zhinengshe.com</title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+    <script src="ajax.js"></script>
+    <script src="../template-native.js"></script>
+    <script type="text/html" id="tpl">
+        <%for(var i=0; i<arrData.length; i++){%>
+        <div class="reply">
+            <p class="replyContent"><%=arrData[i].content%></p>
+            <p class="operation">
+                <span class="replyTime"><%=arrData[i].time%></span>
+                    <span class="handle">
+                    	<a href="javascript:;" class="top"><%=arrData[i].acc%></a>
+                        <a href="javascript:;" class="down_icon"><%=arrData[i].ref%></a>
+                        <a href="javascript:;" class="cut">删除</a>
+                    </span>
+            </p>
+        </div>
+        <%}%>
+    </script>
+    <script>
+        var data={
+            arrData:[]
+        };
+
+        function renderHTML(box,tplId,data){
+            var sHTML=template(tplId,data);
+            box.innerHTML=sHTML;
+        }
+        window.onload=function(){
+            var oBox=document.getElementById('msg_box');
+            var oT=document.getElementById('t1');
+            var oBtn=document.getElementById('btn1');
+
+            var URL='weibo.php';
+            //点击发表
+            oBtn.onclick=function(){
+                ajax({
+                    url:URL,
+                    data:{
+                        act:'add',
+                        content:oT.value
+                    },
+                    success:function(str){
+                        var json=eval('('+str+')');
+                        if(json.error){
+                            alert('发表失败了');
+                        }else{
+                            data.arrData.push({
+                                id:json.id,
+                                time:json.time*1000,
+                                content:oT.value,
+                                acc:0,
+                                ref:0
+                            });
+                            //渲染到页面上
+                            renderHTML(oBox,'tpl',data);
+                        }
+                    }
+                });
+            };
+        };
+    </script>
+</head>
+
+<body>
+<div class="znsArea">
+<!--留言-->
+     <div class="takeComment">
+        <textarea name="textarea" class="takeTextField" id="t1"></textarea>
+        <div class="takeSbmComment">
+            <input type="button" id="btn1" class="inputs" value="" />
+            <span>(可按 Enter 回复)</span>
+        </div>
+    </div>
+<!--已留-->
+    <div class="commentOn">
+        <div class="messList" id="msg_box">
+
+        </div>
+        <div class="page">
+        	<a href="javascript:;" class="active">1</a>
+        	<a href="javascript:;">2</a>
+        	<a href="javascript:;">3</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

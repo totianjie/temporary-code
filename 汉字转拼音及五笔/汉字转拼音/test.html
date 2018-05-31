@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/web-pinyin.js"></script>
+
+</head>
+<body>
+<input type="text" id="val">
+<button type="button" id="btn">转换</button>
+<p id="box"></p>
+<script>
+
+    /*var pinyin = require("pinyin");
+
+    console.log(pinyin("中心"));    // [ [ 'zhōng' ], [ 'xīn' ] ]
+    console.log(pinyin("中心", {
+        heteronym: true               // 启用多音字模式
+    }));                            // [ [ 'zhōng', 'zhòng' ], [ 'xīn' ] ]
+    console.log(pinyin("中心", {
+        heteronym: true,              // 启用多音字模式
+        segment: true                 // 启用分词，以解决多音字问题。
+    }));                            // [ [ 'zhōng' ], [ 'xīn' ] ]
+    console.log(pinyin("中心", {
+        style: pinyin.STYLE_INITIALS, // 设置拼音风格
+        heteronym: true
+    }));*/
+    console.log(pinyin);
+    var oT = document.querySelector('#val');
+    var oBtn = document.querySelector('#btn');
+    var oBox = document.querySelector('#box');
+
+    oBtn.onclick = function () {
+        var str = oT.value;
+
+        var arr = pinyin(str, {
+            style: pinyin.STYLE_INITIALS, // 设置拼音风格
+            heteronym: true
+        });
+
+        console.log(arr);
+    };
+
+</script>
+</body>
+</html>
